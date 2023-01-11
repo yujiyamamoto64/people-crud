@@ -1,8 +1,6 @@
 package com.yujiyamamoto64.peoplecrud.services;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,12 +18,7 @@ public class PersonService {
 
 	@Autowired
 	private AddressRepository addressRepo;
-
-	public Optional<Person> findById(Integer id) {
-		Optional<Person> obj = repo.findById(id);
-		return obj;
-	}
-
+	
 	public Person insert(Person obj) {
 		obj = repo.save(obj);
 		for(Address address : obj.getAddressList()) {
@@ -39,4 +32,33 @@ public class PersonService {
 		return repo.findAll();
 	}
 	
+	public Person findById(Integer id) {
+		Person obj = repo.findById(id).get();
+		return obj;
+	}
+	
+	public Person update(Person newObj) {
+		Person oldObj = findById(newObj.getId());
+		updateData(oldObj, newObj);
+		return repo.save(oldObj);
+	}
+	
+	private void updateData(Person oldObj, Person newObj) {
+		oldObj.setName(newObj.getName());
+		oldObj.setBirthDate(newObj.getBirthDate());
+		
+		for (Address address : oldObj.getAddressList()) {
+			address.setPerson(null);
+		}
+		for (Address address : newObj.getAddressList()) {
+			address.setPerson(oldObj);
+		}
+		oldObj.setAddressList(newObj.getAddressList());
+	}
+	
+	public String maindAddressById(Integer id) {
+		Person obj = repo.findById(id).get();
+		Address address = obj.getAddressList().get(0);
+		return "O principal endereço dessa pessoa é: " + address.toString();
+	}
 }

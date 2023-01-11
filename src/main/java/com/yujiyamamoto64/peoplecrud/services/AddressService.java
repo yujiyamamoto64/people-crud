@@ -12,15 +12,12 @@ import com.yujiyamamoto64.peoplecrud.repositories.AddressRepository;
 public class AddressService {
 
 	@Autowired
-	private AddressRepository addressRepo;
-
-	public Address insert(Address address) {
-		address = addressRepo.save(address);
-		return address;
-	}
+	private AddressRepository repo;
 	
 	public List<Address> findAll() {
-		return addressRepo.findAll();
+		return repo.findAll();
 	}
+	
+	
 	
 }
