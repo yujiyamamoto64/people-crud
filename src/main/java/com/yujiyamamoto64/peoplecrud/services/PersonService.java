@@ -3,10 +3,10 @@ package com.yujiyamamoto64.peoplecrud.services;
 import java.util.List;
 import java.util.Optional;
 
-import org.hibernate.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.yujiyamamoto64.peoplecrud.models.Address;
 import com.yujiyamamoto64.peoplecrud.models.Person;
 import com.yujiyamamoto64.peoplecrud.repositories.AddressRepository;
 import com.yujiyamamoto64.peoplecrud.repositories.PersonRepository;
@@ -25,13 +25,13 @@ public class PersonService {
 		return obj;
 	}
 
-	public Person insert(Person obj) {
-		obj.setId(null);
-		obj = repo.save(obj);
-		addressRepo.saveAll(obj.getAddressList());
-		return obj;
+	public Person insert(Person person) {
+		person.setId(null);
+		person = repo.save(person);
+		List<Address> address = person.getAddressList();
+		addressRepo.saveAll(address);
+		return person;
 	}
-
 	
 	public List<Person> findAll() {
 		return repo.findAll();

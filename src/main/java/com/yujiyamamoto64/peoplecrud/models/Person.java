@@ -1,6 +1,7 @@
 package com.yujiyamamoto64.peoplecrud.models;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -22,7 +23,7 @@ public class Person implements Serializable{
 	private Date birthDate;
 	
 	@OneToMany(mappedBy = "person", cascade = CascadeType.ALL)
-	private List<Address> addressList;
+	private List<Address> addressList = new ArrayList<>();
 	
 	public Person() {
 	}
