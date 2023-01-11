@@ -1,6 +1,7 @@
 package com.yujiyamamoto64.peoplecrud.models;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -20,7 +21,6 @@ public class Person implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String name;
-	private Date birthDate;
 	
 	@OneToMany(mappedBy = "person", cascade = CascadeType.ALL)
 	private List<Address> addressList = new ArrayList<>();
@@ -28,11 +28,11 @@ public class Person implements Serializable{
 	public Person() {
 	}
 	
-	public Person(Integer id, String name, Date birthDate) {
+	public Person(Integer id, String name, List<Address> addressList) {
 		super();
 		this.id = id;
 		this.name = name;
-		this.birthDate = birthDate;
+		this.addressList = addressList;
 	}
 
 	public Integer getId() {
@@ -51,15 +51,14 @@ public class Person implements Serializable{
 		this.name = name;
 	}
 
-	public Date getBirthDate() {
-		return birthDate;
-	}
-
-	public void setBirthDate(Date birthDate) {
-		this.birthDate = birthDate;
-	}
-
 	public List<Address> getAddressList() {
 		return addressList;
 	}
+
+	@Override
+	public String toString() {
+		return "Person [id=" + id + ", name=" + name + ", addressList=" + addressList + "]";
+	}
+	
+	
 }

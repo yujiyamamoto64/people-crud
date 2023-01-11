@@ -1,5 +1,6 @@
 package com.yujiyamamoto64.peoplecrud.services;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,12 +26,13 @@ public class PersonService {
 		return obj;
 	}
 
-	public Person insert(Person person) {
-		person.setId(null);
-		person = repo.save(person);
-		List<Address> address = person.getAddressList();
-		addressRepo.saveAll(address);
-		return person;
+	public Person insert(Person obj) {
+		obj = repo.save(obj);
+		for(Address address : obj.getAddressList()) {
+			address.setPerson(obj);
+		}
+		addressRepo.saveAll(obj.getAddressList());
+		return obj;
 	}
 	
 	public List<Person> findAll() {

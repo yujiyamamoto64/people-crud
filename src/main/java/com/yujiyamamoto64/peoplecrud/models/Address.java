@@ -2,6 +2,8 @@ package com.yujiyamamoto64.peoplecrud.models;
 
 import java.io.Serializable;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -21,6 +23,7 @@ public class Address implements Serializable{
 	private String numero;
 	private String cidade;
 	
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "person_id")
 	private Person person;
@@ -35,7 +38,6 @@ public class Address implements Serializable{
 		this.cep = cep;
 		this.numero = numero;
 		this.cidade = cidade;
-		this.person = person;
 	}
 
 	public Integer getId() {
@@ -85,5 +87,12 @@ public class Address implements Serializable{
 	public void setPerson(Person person) {
 		this.person = person;
 	}
+
+	@Override
+	public String toString() {
+		return "Address [id=" + id + ", logradouro=" + logradouro + ", cep=" + cep + ", numero=" + numero + ", cidade="
+				+ cidade + ", person=" + person + "]";
+	}
+	
 	
 }
